@@ -1,0 +1,60 @@
+version: '2'
+services:
+  mysql_tsuka:
+    image: mysql:5.7
+    container_name: mysql_tsuka
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: tsukadb
+      MYSQL_USER: tsuka
+      MYSQL_PASSWORD: moto
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+    - ./docker/db/data:/var/lib/mysql
+    - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+    - 3306:3306
+
+  web_tsuka:
+    build: ./php
+    image: web:apache24php71
+    ports:
+      - '80:80'
+    volumes:
+      - ./var/log/apache2:/var/log/apache2
+      - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./var/www/html:/var/www/html
+    depends_on:
+      - mysql_tsuka
+    container_name: web_tsuka
+
+  mailhog_tsuka:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+    container_name: mailhog_tsuka
+
+  redis_tsuka:
+    image: redis:5.0.5
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+       - ./var/redis-data:/data
+    restart: unless-stopped
+    container_name: redis_tsuka
+
+  phpmyadmin_tsuka:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql_tsuka
+      - PMA_USER=root
+      - PMA_PASSWORD=pass
+    links:
+      - mysql_tsuka
+    ports:
+      - 8080:80
+    container_name: phpmyadmin_tsuka

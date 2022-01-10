@@ -58,3 +58,12 @@ services:
     ports:
       - 8080:80
     container_name: phpmyadmin_tsuka
+
+  python3:
+    restart: always
+    build: .
+    container_name: 'python3_tsuka'
+    working_dir: '/root/'
+    tty: true
+    volumes:
+      - ./opt:/root/opt

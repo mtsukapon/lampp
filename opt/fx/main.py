@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from model import exchange
-from util import general
 import sys
 
 obj = exchange.proc()
 if obj.checkPath():
     sys.exit()
 
-currencies = ['EUR_JPY', 'EUR_USD', 'USD_JPY', 'WTI']
+currencies = ['EUR_JPY', 'USD_JPY']
 for currency in currencies:
     obj.unitCsvRowData(currency)
+    if obj.modifyColumn(currency):
+        sys.exit()

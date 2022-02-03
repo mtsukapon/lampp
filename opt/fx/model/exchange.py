@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os, shutil, glob
 import pandas as pd
+from util import general
 
 class proc:
     def __init__(self):
@@ -31,3 +32,18 @@ class proc:
             df.to_csv(self.__output_path + '/' + currency + '.csv', mode='a', header=isHeader, index=False)
             #2ファイル目以降のヘッダ行は使用しない
             isHeader = False
+
+    def modifyColumn(self, currency):
+        #結合したCSVファイルが/outになければ後続の処理を行わない
+        path = self.__output_path
+        file = path + '/' + currency + '.csv'
+        if not os.path.exists(file):
+            return True
+        df = pd.read_csv(file, engine='python', encoding='UTF-8')
+        #不要カラムの削除
+        df = general.dropColumn(df)
+        #カラム名の変更
+        df = general.renameColumn(df, currency)
+        #ファイルの差し替え
+        general.switchingFile(df, path, currency)
+        return False

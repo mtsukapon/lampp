@@ -47,3 +47,10 @@ class proc:
         #ファイルの差し替え
         general.switchingFile(df, path, currency)
         return False
+
+    def unitCsvColData(self):
+        output = self.__output_path
+        df1 = pd.read_csv(output + '/EUR_JPY.csv')
+        df2 = pd.read_csv(output + '/USD_JPY.csv')
+        df = pd.merge(df1, df2, on='date', how='outer')
+        df.to_csv(output + '/exchange.csv', index=False)

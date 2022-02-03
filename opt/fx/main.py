@@ -11,3 +11,5 @@ for currency in currencies:
     obj.unitCsvRowData(currency)
     if obj.modifyColumn(currency):
         sys.exit()
+
+obj.unitCsvColData()

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import os, shutil
+import os, shutil, glob
+import pandas as pd
 
 class proc:
     def __init__(self):
@@ -19,3 +20,14 @@ class proc:
             shutil.rmtree(output)
         os.mkdir(output)
         return False
+
+    def unitCsvRowData(self, currency):
+        search = self.__input_path + '/**/*' + currency + '*.csv'
+        csvFiles = glob.glob(search, recursive=True)
+        #1ファイル目のヘッダ行は使用する
+        isHeader = True
+        for csvFile in csvFiles:
+            df = pd.read_csv(csvFile, engine='python', encoding='UTF-8')
+            df.to_csv(self.__output_path + '/' + currency + '.csv', mode='a', header=isHeader, index=False)
+            #2ファイル目以降のヘッダ行は使用しない
+            isHeader = False

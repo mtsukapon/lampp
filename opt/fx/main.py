@@ -9,4 +9,4 @@ if obj.checkPath():
 
 currencies = ['EUR_JPY', 'EUR_USD', 'USD_JPY', 'WTI']
 for currency in currencies:
-    print(currency)
+    obj.unitCsvRowData(currency)

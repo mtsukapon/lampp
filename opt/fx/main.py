@@ -13,3 +13,4 @@ for currency in currencies:
         sys.exit()
 
 obj.unitCsvColData()
+obj.complementDate()

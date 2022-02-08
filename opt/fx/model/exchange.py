@@ -78,3 +78,18 @@ class proc:
         #インデックスを日付に置き換える
         df['date'] = df.index
         df.to_csv(output + '/' + self.EXCHANGE_FILE, index=False)
+
+    def replaceMissingValue(self, currency):
+        output = self.__output_path
+        df = pd.read_csv(output + '/' + self.EXCHANGE_FILE)
+        #型変換 print(df.dtypes)
+        df = df.astype({
+            currency + "_high": float,
+            currency + "_low": float,
+        })
+        #欠損値を0に置換
+        df = df.fillna({
+            currency + "_high": 0,
+            currency + "_low": 0,
+        })
+        df.to_csv(output + '/' + self.EXCHANGE_FILE, index=False)

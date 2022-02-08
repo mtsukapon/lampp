@@ -14,3 +14,6 @@ for currency in currencies:
 
 obj.unitCsvColData()
 obj.complementDate()
+
+for currency in currencies:
+    obj.replaceMissingValue(currency)

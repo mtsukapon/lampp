@@ -26,3 +26,21 @@ def switchingFile(df, path, currency):
     if os.path.exists(file):
         os.remove(file)
     os.rename(temp, file)
+
+def sortColumn(df):
+    df = df[[
+        "date",
+        "weekday",
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat",
+        "EUR_JPY_high",
+        "EUR_JPY_low",
+        "USD_JPY_high",
+        "USD_JPY_low",
+    ]]
+    return df

@@ -93,3 +93,28 @@ class proc:
             currency + "_low": 0,
         })
         df.to_csv(output + '/' + self.EXCHANGE_FILE, index=False)
+
+    def addDayOfWeekCode(self):
+        output = self.__output_path
+        df = pd.read_csv(output + '/' + self.EXCHANGE_FILE)
+        #日付型に置換
+        df['date'] = pd.to_datetime(df['date'])
+        #曜日コード追加
+        df['weekday'] = df["date"].dt.weekday
+        df['sun'] = 0
+        df['mon'] = 0
+        df['tue'] = 0
+        df['wed'] = 0
+        df['thu'] = 0
+        df['fri'] = 0
+        df['sat'] = 0
+        df.loc[df['weekday'] == 0, 'mon'] = 1
+        df.loc[df['weekday'] == 1, 'tue'] = 1
+        df.loc[df['weekday'] == 2, 'wed'] = 1
+        df.loc[df['weekday'] == 3, 'thu'] = 1
+        df.loc[df['weekday'] == 4, 'fri'] = 1
+        df.loc[df['weekday'] == 5, 'sat'] = 1
+        df.loc[df['weekday'] == 6, 'sun'] = 1
+        #カラム名の並び替え
+        df = general.sortColumn(df)
+        df.to_csv(output + '/' + self.EXCHANGE_FILE, index=False)

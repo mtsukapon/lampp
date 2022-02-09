@@ -17,3 +17,5 @@ obj.complementDate()
 
 for currency in currencies:
     obj.replaceMissingValue(currency)
+
+obj.addDayOfWeekCode()

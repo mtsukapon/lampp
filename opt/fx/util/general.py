@@ -40,7 +40,11 @@ def sortColumn(df):
         "sat",
         "EUR_JPY_high",
         "EUR_JPY_low",
+        "EUR_USD_high",
+        "EUR_USD_low",
         "USD_JPY_high",
         "USD_JPY_low",
+        "WTI_high",
+        "WTI_low",
     ]]
     return df

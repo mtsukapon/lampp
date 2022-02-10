@@ -53,8 +53,12 @@ class proc:
     def unitCsvColData(self):
         output = self.__output_path
         df1 = pd.read_csv(output + '/EUR_JPY.csv')
-        df2 = pd.read_csv(output + '/USD_JPY.csv')
+        df2 = pd.read_csv(output + '/EUR_USD.csv')
+        df3 = pd.read_csv(output + '/USD_JPY.csv')
+        df4 = pd.read_csv(output + '/WTI.csv')
         df = pd.merge(df1, df2, on='date', how='outer')
+        df = pd.merge(df, df3, on='date', how='outer')
+        df = pd.merge(df, df4, on='date', how='outer')
         df.to_csv(output + '/' + self.EXCHANGE_FILE, index=False)
 
     def complementDate(self):

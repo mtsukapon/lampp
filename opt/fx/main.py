@@ -6,7 +6,7 @@ obj = exchange.proc()
 if obj.checkPath():
     sys.exit()
 
-currencies = ['EUR_JPY', 'USD_JPY']
+currencies = ['EUR_JPY', 'EUR_USD', 'USD_JPY', 'WTI']
 for currency in currencies:
     obj.unitCsvRowData(currency)
     if obj.modifyColumn(currency):
